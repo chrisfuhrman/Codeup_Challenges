@@ -1,7 +1,6 @@
 <?php
 
 //Codeup Challenge: Alphabet Soup
-
 // Create a function alphabet_soup($str) that accepts a string
 // and will return the string in alphabetical order.
 // E.g. "hello world" becomes "ehllo dlorw". So make sure your 
@@ -24,8 +23,9 @@ function alphabet_soup($str) {
 		//Alphabetizes each word separately in the string
 		sort($array2);
 		// echos the value from the array and puts a space between each word
-		echo implode($array2) . ' ';
+		$string .= implode($array2) . ' ';
 	}
+	return $string;
 }
 
 // ask user for input
