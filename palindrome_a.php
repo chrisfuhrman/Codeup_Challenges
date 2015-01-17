@@ -24,11 +24,9 @@ function is_palindrome($string) {
 	} else {
 		return "False" . PHP_EOL;
 	}
-	// Is there a way to not put 2 PHP_EOL's above and utilize the one below?
 }
 
 fwrite(STDOUT, "\nEnter suspected palindrome\n");
-
 
 //call "is_palindrom" function
 $string = trim(fgets(STDIN));

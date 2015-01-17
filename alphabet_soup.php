@@ -15,8 +15,8 @@ function alphabet_soup($str) {
 	$array1 = explode(' ', $str);
 	// turns $str into an array, with each word as a separate element
 	
-//converts each element of $array1 their own array,
-//then alphabetizes each array and returns the value as a string
+	//converts each element of $array1 their own array,
+	//then alphabetizes each array and returns the value as a string
 	foreach ($array1 as $value) {
 		// cycles through $array1 and breaks each element into its own string
 		$array2 = str_split($value);

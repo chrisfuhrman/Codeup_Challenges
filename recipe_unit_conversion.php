@@ -9,413 +9,343 @@
 // what unit they would like to convert it to.
 
 
-	// Fluid Units
-// Teaspoon (tsp)
-// Tablespoon (Tbsp)
-// Fluid Ounce (fl oz)
-// Cup (cp)
-// Pint (pt)
-// Quart (qt)
-// Gallon (gal)
+// Fluid Units
+$UNIT_TEASPOON = 'tsp';
+$UNIT_TABLESPOON = 'tbsp';
+$UNIT_FLUID_OUNCES = 'flOz';
+$UNIT_CUP = 'cp';
+$UNIT_PINT = 'pt';
+$UNIT_QUART = 'qt';
+$UNIT_GALLON = 'gal';
+//Dry Units:
+$UNIT_DRY_OUNCES = 'dryOz';
+$UNIT_POUND = 'lb';
 
-	// Dry Units
-// Ounce (oz)
-// Pound (lb)
+$acceptableUnits = [$UNIT_TEASPOON, $UNIT_TABLESPOON, $UNIT_FLUID_OUNCES, $UNIT_CUP, $UNIT_PINT, $UNIT_QUART, $UNIT_GALLON, $UNIT_DRY_OUNCES, $UNIT_POUND];
+
+$acceptableConversions = [
+	
+	$UNIT_TEASPOON => [$UNIT_TABLESPOON, $UNIT_FLUID_OUNCES, $UNIT_CUP, $UNIT_PINT, $UNIT_QUART, $UNIT_GALLON],
+	$UNIT_TABLESPOON => [$UNIT_TEASPOON, $UNIT_FLUID_OUNCES, $UNIT_CUP, $UNIT_PINT, $UNIT_QUART, $UNIT_GALLON],
+	$UNIT_FLUID_OUNCES => [$UNIT_TEASPOON, $UNIT_FLUID_OUNCES, $UNIT_CUP, $UNIT_PINT, $UNIT_QUART, $UNIT_GALLON],
+	$UNIT_CUP => [$UNIT_TEASPOON, $UNIT_FLUID_OUNCES, $UNIT_CUP, $UNIT_PINT, $UNIT_QUART, $UNIT_GALLON],
+	$UNIT_PINT => [$UNIT_TEASPOON, $UNIT_FLUID_OUNCES, $UNIT_CUP, $UNIT_PINT, $UNIT_QUART, $UNIT_GALLON],
+	$UNIT_QUART => [$UNIT_TEASPOON, $UNIT_FLUID_OUNCES, $UNIT_CUP, $UNIT_PINT, $UNIT_QUART, $UNIT_GALLON],
+	$UNIT_GALLON => [$UNIT_TEASPOON, $UNIT_FLUID_OUNCES, $UNIT_CUP, $UNIT_PINT, $UNIT_QUART, $UNIT_GALLON],
+	$UNIT_DRY_OUNCES => [$UNIT_POUND],
+	$UNIT_POUND => [$UNIT_DRY_OUNCES]
+];
 
 
-fwrite(STDOUT, 'What unit of measurement would you like to convert to (tsp, tbsp, flOz, cp, pt, qt, gal, dryOz, or lb)?  ');
-"\n";
-$endMeasure = strtolower(trim(fgets(STDIN)));
+//multiple conditions, call with function
+do {
 
-fwrite(STDOUT, 'What unit of measurement are you converting from (tsp, tbsp, flOz, cp, pt, qt, gal, dryOz, or lb)?  ');
-"\n";
-$beginMeasure = strtolower(trim(fgets(STDIN)));
+	echo "What unit of measurement do you need to convert? (" . implode($acceptableUnits, ", ") . ")? \n";
+	"\n";
+	$inputUnit = strtolower(trim(fgets(STDIN)));
 
-fwrite(STDOUT, 'How many units do you have?  ');
-"\n";
-$valueInitial = strtolower(trim(fgets(STDIN)));
+	if (in_array($inputUnit, $acceptableUnits)) {
+		echo "What unit of measurement would you like to convert to? (" . implode($acceptableUnits, ", ") . ")? \n";
+		"\n";
+		$outputUnit = strtolower(trim(fgets(STDIN)));
 
-// function getInput($upper = false) {
-//     $input = trim(fgets(STDIN));
-//     if ($upper) {
-//         $input = strtoupper($input);
-//     }
-//     return $input;
-// }
+		if (in_array($outputUnit, $acceptableConversions[$inputUnit])) {
+			do {
+				echo "How many" . " " . $inputUnit . "'s do you have?" . PHP_EOL;
+				"\n";
+				$inputValue = strtolower(trim(fgets(STDIN)));
+		}
+	} while (!in_array($outputUnit, $acceptableValues));
+	}
+} while (!in_array($inputUnit, $acceptableValues));
 
 
 //function to convert to tsp		
-function convertToTsp ($beginMeasure, $valueInitial) {
-	switch ($beginMeasure) {
+function convertToTsp ($inputUnit, $inputValue) {
+	switch ($inputUnit) {
 		case 'tsp':
-			$valueConverted = $valueInitial;
+			$valueConverted = $inputValue;
 			return $valueConverted;
 			break;
 		case 'tbsp':
-			$valueConverted = $valueInitial * 3;
+			$valueConverted = $inputValue * 3;
 			return $valueConverted;
 			break;
 		case 'flOz':
-			$valueConverted = $valueInitial * 6;
+			$valueConverted = $inputValue * 6;
 			return $valueConverted;
 			break;
 		case 'cp':
-			$valueConverted = $valueInitial * 48;
+			$valueConverted = $inputValue * 48;
 			return $valueConverted;
 			break;
 		case 'pt':
-			$valueConverted = $valueInitial * 96;
+			$valueConverted = $inputValue * 96;
 			return $valueConverted;
 			break;
 		case 'qt':
-			$valueConverted = $valueInitial * 192;
+			$valueConverted = $inputValue * 192;
 			return $valueConverted;
 			break;
 		case 'gal':
-			$valueConverted = $valueInitial * 768;
+			$valueConverted = $inputValue * 768;
 			return $valueConverted;
 			break;
 	}
 }
 //function to convert to tbsp
-function convertToTbsp ($beginMeasure, $valueInitial) {
-		switch ($beginMeasure) {
+function convertToTbsp ($inputUnit, $inputValue) {
+		switch ($inputUnit) {
 			case 'tsp':
-				$valueConverted = $valueInitial * 0.333333;
+				$valueConverted = $inputValue * 0.333333;
 				return $valueConverted;
 				break;
 			case 'tbsp':
-				$valueConverted = $valueInitial;
+				$valueConverted = $inputValue;
 				return $valueConverted;
 				break;
 			case 'flOz':
-				$valueConverted = $valueInitial * 2;
+				$valueConverted = $inputValue * 2;
 				return $valueConverted;
 				break;
 			case 'cp':
-				$valueConverted = $valueInitial * 16;
+				$valueConverted = $inputValue * 16;
 				return $valueConverted;
 				break;
 			case 'pt':
-				$valueConverted = $valueInitial * 32;
+				$valueConverted = $inputValue * 32;
 				return $valueConverted;
 				break;
 			case 'qt':
-				$valueConverted = $valueInitial * 64;
+				$valueConverted = $inputValue * 64;
 				return $valueConverted;
 				break;
 			case 'gal':
-				$valueConverted = $valueInitial * 256;
+				$valueConverted = $inputValue * 256;
 				return $valueConverted;
 				break;
 		}
 
 }
 //function to convert to flOz
-function convertToFlOz ($beginMeasure, $valueInitial) {
-		switch ($beginMeasure) {
+function convertToFlOz ($inputUnit, $inputValue) {
+		switch ($inputUnit) {
 			case 'tsp':
-				$valueConverted = $valueInitial * 0.166667;
+				$valueConverted = $inputValue * 0.166667;
 				return $valueConverted;
 				break;
 			case 'tbsp':
-				$valueConverted = $valueInitial * 0.5;
+				$valueConverted = $inputValue * 0.5;
 				return $valueConverted;
 				break;
 			case 'flOz':
-				$valueConverted = $valueInitial;
+				$valueConverted = $inputValue;
 				return $valueConverted;
 				break;
 			case 'cp':
-				$valueConverted = $valueInitial * 8;
+				$valueConverted = $inputValue * 8;
 				return $valueConverted;
 				break;
 			case 'pt':
-				$valueConverted = $valueInitial * 16;
+				$valueConverted = $inputValue * 16;
 				return $valueConverted;
 				break;
 			case 'qt':
-				$valueConverted = $valueInitial * 32;
+				$valueConverted = $inputValue * 32;
 				return $valueConverted;
 				break;
 			case 'gal':
-				$valueConverted = $valueInitial * 128;
+				$valueConverted = $inputValue * 128;
 				return $valueConverted;
 				break;
 		}
 
 }
 //function to convert to cp
-function convertToCp ($beginMeasure, $valueInitial) {
-		switch ($beginMeasure) {
+function convertToCp ($inputUnit, $inputValue) {
+		switch ($inputUnit) {
 			case 'tsp':
-				$valueConverted = $valueInitial * 0.0208333;
+				$valueConverted = $inputValue * 0.0208333;
 				return $valueConverted;
 				break;
 			case 'tbsp':
-				$valueConverted = $valueInitial * 0.0625;
+				$valueConverted = $inputValue * 0.0625;
 				return $valueConverted;
 				break;
 			case 'flOz':
-				$valueConverted = $valueInitial * 0.125;
+				$valueConverted = $inputValue * 0.125;
 				return $valueConverted;
 				break;
 			case 'cp':
-				$valueConverted = $valueInitial;
+				$valueConverted = $inputValue;
 				return $valueConverted;
 				break;
 			case 'pt':
-				$valueConverted = $valueInitial * 2;
+				$valueConverted = $inputValue * 2;
 				return $valueConverted;
 				break;
 			case 'qt':
-				$valueConverted = $valueInitial * 4;
+				$valueConverted = $inputValue * 4;
 				return $valueConverted;
 				break;
 			case 'gal':
-				$valueConverted = $valueInitial * 16;
+				$valueConverted = $inputValue * 16;
 				return $valueConverted;
 				break;
 		}
 
 }
 //function to convert to pt
-function convertToPt ($beginMeasure, $valueInitial) {
-		switch ($beginMeasure) {
+function convertToPt ($inputUnit, $inputValue) {
+		switch ($inputUnit) {
 			case 'tsp':
-				$valueConverted = $valueInitial * 0.0208333;
+				$valueConverted = $inputValue * 0.0208333;
 				return $valueConverted;
 				break;
 			case 'tbsp':
-				$valueConverted = $valueInitial * 0.0625;
+				$valueConverted = $inputValue * 0.0625;
 				return $valueConverted;
 				break;
 			case 'flOz':
-				$valueConverted = $valueInitial * 0.0625;
+				$valueConverted = $inputValue * 0.0625;
 				return $valueConverted;
 				break;
 			case 'cp':
-				$valueConverted = $valueInitial * 0.5;
+				$valueConverted = $inputValue * 0.5;
 				return $valueConverted;
 				break;
 			case 'pt':
-				$valueConverted = $valueInitial;
+				$valueConverted = $inputValue;
 				return $valueConverted;
 				break;
 			case 'qt':
-				$valueConverted = $valueInitial * 2;
+				$valueConverted = $inputValue * 2;
 				return $valueConverted;
 				break;
 			case 'gal':
-				$valueConverted = $valueInitial * 8;
+				$valueConverted = $inputValue * 8;
 				return $valueConverted;
 				break;
 		}
 
 }
 //function to convert to qt
-function convertToQt ($beginMeasure, $valueInitial) {
-		switch ($beginMeasure) {
+function convertToQt ($inputUnit, $inputValue) {
+		switch ($inputUnit) {
 			case 'tsp':
-				$valueConverted = $valueInitial * 0.00520833;
+				$valueConverted = $inputValue * 0.00520833;
 				return $valueConverted;
 				break;
 			case 'tbsp':
-				$valueConverted = $valueInitial * 0.015625;
+				$valueConverted = $inputValue * 0.015625;
 				return $valueConverted;
 				break;
 			case 'flOz':
-				$valueConverted = $valueInitial * 0.03125;
+				$valueConverted = $inputValue * 0.03125;
 				return $valueConverted;
 				break;
 			case 'cp':
-				$valueConverted = $valueInitial * 0.25;
+				$valueConverted = $inputValue * 0.25;
 				return $valueConverted;
 				break;
 			case 'pt':
-				$valueConverted = $valueInitial * 0.5;
+				$valueConverted = $inputValue * 0.5;
 				return $valueConverted;
 				break;
 			case 'qt':
-				$valueConverted = $valueInitial;
+				$valueConverted = $inputValue;
 				return $valueConverted;
 				break;
 			case 'gal':
-				$valueConverted = $valueInitial * 4;
+				$valueConverted = $inputValue * 4;
 				return $valueConverted;
 				break;
 		}
 
 }
 //function to convert to gal
-function convertToGal ($beginMeasure, $valueInitial) {
-		switch ($beginMeasure) {
+function convertToGal ($inputUnit, $inputValue) {
+		switch ($inputUnit) {
 			case 'tsp':
-				$valueConverted = $valueInitial * 0.00130208;
+				$valueConverted = $inputValue * 0.00130208;
 				return $valueConverted;
 				break;
 			case 'tbsp':
-				$valueConverted = $valueInitial * 0.00390625;
+				$valueConverted = $inputValue * 0.00390625;
 				return $valueConverted;
 				break;
 			case 'flOz':
-				$valueConverted = $valueInitial * 0.0078125;
+				$valueConverted = $inputValue * 0.0078125;
 				return $valueConverted;
 				break;
 			case 'cp':
-				$valueConverted = $valueInitial * 0.0625;
+				$valueConverted = $inputValue * 0.0625;
 				return $valueConverted;
 				break;
 			case 'pt':
-				$valueConverted = $valueInitial * 0.125;
+				$valueConverted = $inputValue * 0.125;
 				return $valueConverted;
 				break;
 			case 'qt':
-				$valueConverted = $valueInitial * 0.25;
+				$valueConverted = $inputValue * 0.25;
 				return $valueConverted;
 				break;
 			case 'gal':
-				$valueConverted = $valueInitial;
+				$valueConverted = $inputValue;
 				return $valueConverted;
 				break;
 		}
 
 }
 //function to convert to dryOz
-function convertToDryOz ($beginMeasure, $valueInitial) {
-		switch ($beginMeasure) {
+function convertToDryOz ($inputUnit, $inputValue) {
+		switch ($inputUnit) {
 			case 'lb':
-				$valueConverted = $valueInitial * ;
+				$valueConverted = $inputValue * 16;
 				return $valueConverted;
 				break;
 		}
 
 }
 //function to convert to lb
-function convertToLb ($beginMeasure, $valueInitial) {
-		switch ($beginMeasure) {
+function convertToLb ($inputUnit, $inputValue) {
+		switch ($inputUnit) {
 			case 'dryOz':
-				$valueConverted = $valueInitial * ;
+				$valueConverted = $inputValue * 0.0625;
 				return $valueConverted;
 				break;
 		}
 }
 
-switch ($endMeasure) {
+switch ($outputUnit) {
 	case 'tsp':
-		$valueConverted = convertToTsp($beginMeasure, $valueInitial);
+		$valueConverted = convertToTsp($inputUnit, $inputValue);
 		break;
 	case 'tbsp':
-		$valueConverted = convertToTbsp($beginMeasure, $valueInitial);
+		$valueConverted = convertToTbsp($inputUnit, $inputValue);
 		break;
 	case 'flOz':
-		$valueConverted = convertToFlOz($beginMeasure, $valueInitial);
+		$valueConverted = convertToFlOz($inputUnit, $inputValue);
 		break;
 	case 'cp':
-		$valueConverted = convertToCp($beginMeasure, $valueInitial);
+		$valueConverted = convertToCp($inputUnit, $inputValue);
 		break;
 	case 'pt':
-		$valueConverted = convertToPt($beginMeasure, $valueInitial);
+		$valueConverted = convertToPt($inputUnit, $inputValue);
 		break;
 	case 'qt':
-		$valueConverted = convertToQt($beginMeasure, $valueInitial);
+		$valueConverted = convertToQt($inputUnit, $inputValue);
 		break;
 	case 'gal':
-		$valueConverted = convertToGal($beginMeasure, $valueInitial);
+		$valueConverted = convertToGal($inputUnit, $inputValue);
 		break;
 	case 'dryOz':
-		$valueConverted = convertToDryOz($beginMeasure, $valueInitial);
+		$valueConverted = convertToDryOz($inputUnit, $inputValue);
 		break;
 	case 'lb':
-		$valueConverted = convertToLb($beginMeasure, $valueInitial);
+		$valueConverted = convertToLb($inputUnit, $inputValue);
 		break;
 	}
 
-echo $valueConverted . 'test' . PHP_EOL;
-echo $valueInitial, $beginMeasure, ' equals ', round($valueConverted, 2), $endMeasure, PHP_EOL;
-
-// The loop!
-// do {
-
-//     // Show the menu options
-//     echo "What unit would you like to convert to?\n 
-//     tsp, tbsp, fl_oz, cp, pt, qt, gal"
-//     fwrite)
-
-//     // Get the input from user
-//     // Use trim() to remove whitespace and newlines
-//     $input = getInput(true);
-
-//     // Check for actionable input
-//     if ($input == 'N') {
-//         // Ask for entry
-//         echo 'Enter item: ';
-//         // Add entry to list array
-//         $items[] = getInput();
-//     } elseif ($input == 'R') {
-//         // Remove which item?
-//         echo 'Enter item number to remove: ';
-//         // Get array key
-//         $key = getInput();
-//         //The $key-- brings the index value back to the actual index value
-//         $key--;
-//         // Remove from array
-//         unset($items[$key]);
-//         // reindex numerical array
-//         $items = array_values($items);
-//     }
-// // Exit when input is (Q)uit
-// } while ($input != 'Q');
-// // tbsp conversion
-// tsp = $tbsp * 
-// tbsp = $tbsp;
-// fl_oz = $tbsp * 
-// cp = $tbsp * 
-// pt = $tbsp *
-// qt = $tbsp * 
-// gal = $tbsp * 
-
-// // fl_oz conversion
-// tsp = $fl_oz
-// tbsp * 
-// fl_oz = $fl_oz; 
-// cp = 
-// pt = 
-// qt =  * 
-// gal =  * 
-
-// // Cup conversion
-// tsp = $cp * 48;
-// tbsp = $cp * 16;
-// fl_oz = $cp * 8;
-// $cp = $cp;
-// pt = $cp * 0.5;
-// qt = $cp * 0.25;
-// gal = $cp * 0.0625;
-
-// // pint conversion
-// tsp = $pt
-// tbsp
-// fl_oz = 
-// $pt = $pt;
-// $qt = $
-// // Quart (qt)
-
-// // Gallon (gal)
-
-
-
-// // oz to lb
-// lb = $oz * 16;
-
-// // lb to oz
-// oz = $lb * 0.0625;
-
-
-
-
-
-
-
-
+echo $inputValue, $inputUnit, ' equals ', round($valueConverted, 2), $outputUnit, PHP_EOL;
 
